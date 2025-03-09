@@ -101,7 +101,44 @@ int yylex(void);
 #  endif
 # endif
 
-#include "parser.tab.h"
+
+/* Debug traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 0
+#endif
+#if YYDEBUG
+extern int yydebug;
+#endif
+
+/* Token kinds.  */
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
+  enum yytokentype
+  {
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    num = 258                      /* num  */
+  };
+  typedef enum yytokentype yytoken_kind_t;
+#endif
+
+/* Value type.  */
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+typedef int YYSTYPE;
+# define YYSTYPE_IS_TRIVIAL 1
+# define YYSTYPE_IS_DECLARED 1
+#endif
+
+
+extern YYSTYPE yylval;
+
+
+int yyparse (void);
+
+
+
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -1067,17 +1104,17 @@ yyreduce:
   case 2: /* st: st expr '\n'  */
 #line 17 "parser.y"
                   { printf("VALID\n"); }
-#line 1071 "parser.tab.c"
+#line 1108 "parser.tab.c"
     break;
 
   case 4: /* st: error '\n'  */
 #line 19 "parser.y"
                 { printf("INVALID\n"); yyerrok; }
-#line 1077 "parser.tab.c"
+#line 1114 "parser.tab.c"
     break;
 
 
-#line 1081 "parser.tab.c"
+#line 1118 "parser.tab.c"
 
       default: break;
     }
